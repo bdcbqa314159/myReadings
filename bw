@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# My reading log. The database lives in THIS repo, reports collect in reports/.
+#
+#   ./bw                    open the TUI
+#   ./bw list               any CLI verb: add / progress / finish / shelve / list / report
+set -euo pipefail
+
+repo="$(cd "$(dirname "$0")" && pwd)"
+export BOOKWARD_DB="$repo/reading.db"
+cd "$repo/reports"   # report output (tex/pdf + latexmk aux) lands here, not in the repo root
+
+if [ $# -eq 0 ]; then
+  exec "$repo/bin/bookward-tui"
+fi
+exec "$repo/bin/bookward" "$@"

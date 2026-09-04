@@ -1,0 +1,17 @@
+# binaries ship in via ~/work/bookward/scripts/dist.sh ~/work/myReadings/bin
+bin/
+
+# the repo is PUBLIC; only the LaTeX report is published — the log itself stays local
+reading.db
+reports/*.pdf
+
+# latexmk work files
+reports/*.aux
+reports/*.log
+reports/*.out
+reports/*.fls
+reports/*.fdb_latexmk
+reports/*.synctex.gz
+
+.DS_Store
+CLAUDE.local.md
