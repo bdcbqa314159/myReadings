@@ -1,9 +1,10 @@
 # binaries ship in via ~/work/bookward/scripts/dist.sh ~/work/myReadings/bin
 bin/
 
-# the repo is PUBLIC; only the LaTeX report is published — the log itself stays local
+# the repo is PUBLIC; published = the generated PDF + Markdown catalog.
+# The log itself stays local; .tex is an intermediate artifact.
 reading.db
-reports/*.pdf
+reports/*.tex
 
 # latexmk work files
 reports/*.aux

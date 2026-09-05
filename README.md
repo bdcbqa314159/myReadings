@@ -2,8 +2,8 @@
 
 My reading catalog, powered by
 [bookward](https://github.com/bdcbqa314159/bookward). Published here: the
-**LaTeX catalog** (`reports/*.tex`). The database itself (`reading.db`) and the
-PDFs stay local, and the binaries ship in with
+generated **[Markdown catalog](reports/reading-catalog.md)** and its **PDF**.
+The database itself (`reading.db`) stays local, and the binaries ship in with
 `~/work/bookward/scripts/dist.sh ~/work/myReadings/bin`.
 
 Each entry gets a generated id (`bk-0001`, ...) which names the book's PDF on
