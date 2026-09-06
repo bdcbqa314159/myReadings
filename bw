@@ -13,6 +13,6 @@ if [ $# -eq 0 ]; then
   exec "$repo/bin/bookward-tui"
 fi
 if [ "$1" = "gui" ]; then
-  exec "$HOME/work/bookward/rust/target/release/bookward-gui"
+  exec "$repo/bin/bookward-gui"
 fi
 exec "$repo/bin/bookward" "$@"
