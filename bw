@@ -12,4 +12,7 @@ cd "$repo/reports"   # report output (tex/pdf + latexmk aux) lands here, not in 
 if [ $# -eq 0 ]; then
   exec "$repo/bin/bookward-tui"
 fi
+if [ "$1" = "gui" ]; then
+  exec "$HOME/work/bookward/rust/target/release/bookward-gui"
+fi
 exec "$repo/bin/bookward" "$@"
