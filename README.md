@@ -23,7 +23,7 @@ the archive drive — the database is the index connecting titles to files.
 ./bw year bk-0001 2021                # move a reading to another year
 ./bw remove bk-0003 [--year 2021]     # forget one reading, or the whole book
 ./bw report                           # regenerate reports/ only
-./bw publish ["commit message"]       # report + site, commit, push
+./bw publish ["commit message"]       # report + site, commit, open a PR
 ```
 
 Convention: books read before the list began (2022) are logged with
@@ -33,8 +33,13 @@ Convention: books read before the list began (2022) are logged with
 
 `reading.db` is gitignored, so an edit is invisible to git until the catalog
 is regenerated — `./bw publish` is the one command that closes that gap. It
-runs the LaTeX/Markdown report, rebuilds `docs/index.html`, commits both, and
-pushes. GitHub Pages serves `docs/` on the next build, no CI involved.
+runs the LaTeX/Markdown report, rebuilds `docs/index.html`, commits both to a
+`catalog/<timestamp>` branch, and opens a PR. Merge it and GitHub Pages serves
+`docs/` on the next build, no CI involved.
+
+`main` is protected: pull requests only, signed commits, linear history, no
+force-pushes or deletions, enforced for admins too. That is why publishing
+goes through a PR — a direct push to `main` is rejected, by design.
 
 Only what the Markdown catalog already contains reaches the web: title,
 author, edition, id, year, and the worked flag. The log stays on the machine.
