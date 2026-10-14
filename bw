@@ -22,6 +22,9 @@ case "$1" in
   publish)
     # The db is gitignored, so an edit is invisible to git until the catalog is
     # regenerated. This is the one command that closes that gap.
+    #
+    # main is protected (PR-only, signed, linear), so this opens a PR rather
+    # than pushing. Merging stays a deliberate, separate act.
     (cd "$repo/reports" && "$repo/bin/bookward" report)
     python3 "$repo/scripts/build_page.py"
     cd "$repo"
@@ -30,9 +33,18 @@ case "$1" in
       echo "nothing to publish — the catalog already matches the log"
       exit 0
     fi
-    git commit -q -m "${2:-catalog: refresh}"
-    git push -q
-    echo "published: https://bdcbqa314159.github.io/myReadings/"
+    msg="${2:-catalog: refresh}"
+    branch="catalog/$(date +%Y%m%d-%H%M%S)"
+    git switch -q -c "$branch"
+    git commit -q -m "$msg"
+    git push -q -u origin "$branch"
+    gh pr create --title "$msg" \
+      --body "Regenerated \`reports/reading-catalog.{md,pdf}\` and \`docs/index.html\` from the local log." \
+      --head "$branch" --base main
+    git switch -q main
+    echo
+    echo "to publish, merge it:"
+    echo "  gh pr merge --squash --delete-branch $branch && git pull --ff-only"
     exit 0
     ;;
 esac
