@@ -1,0 +1,177 @@
+#!/usr/bin/env python3
+"""reading.db -> docs/index.html, the GitHub Pages catalog.
+
+Publishes exactly what reports/reading-catalog.md already publishes: title,
+author, edition, generated id, year, worked flag. The database itself never
+leaves the machine.
+
+ponytail: this re-formats what bookward's report.cpp already knows how to emit
+(LaTeX + Markdown from one entry() function). A third backend in C++ would be
+one source of truth, but it would put this stylesheet inside a string literal
+and make every design tweak a rebuild + dist.sh. Move it there if the two ever
+disagree about what an entry looks like.
+"""
+
+import html
+import os
+import re
+import sqlite3
+import sys
+from collections import defaultdict
+from pathlib import Path
+
+REPO = Path(__file__).resolve().parent.parent
+
+CSS = """\
+:root {
+  --bg: #fbfaf7; --fg: #1c1b19; --muted: #6b665e; --rule: #e2ded5;
+  --accent: #7a5c2e; --badge-bg: #efe7d8; --badge-fg: #6b4f22;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #15140f; --fg: #e9e5dc; --muted: #9a948a; --rule: #2e2b24;
+    --accent: #c9a86a; --badge-bg: #2b2418; --badge-fg: #d8bd85;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; padding: 4rem 1.5rem 6rem;
+  background: var(--bg); color: var(--fg);
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  font-size: 18px; line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+main { max-width: 42rem; margin: 0 auto; }
+header { margin-bottom: 3.5rem; }
+h1 {
+  font-size: 2.4rem; line-height: 1.15; margin: 0 0 .6rem;
+  letter-spacing: -0.02em; font-weight: 600;
+}
+.tally { color: var(--muted); font-size: 1rem; margin: 0; font-variant-numeric: tabular-nums; }
+h2 {
+  font-size: 1rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .12em; color: var(--accent);
+  margin: 3rem 0 0; padding-bottom: .6rem; border-bottom: 1px solid var(--rule);
+}
+h2 .count { float: right; color: var(--muted); font-weight: 400; letter-spacing: 0; text-transform: none; }
+ol { list-style: none; margin: 0; padding: 0; }
+li { padding: 1.1rem 0; border-bottom: 1px solid var(--rule); }
+.title { font-size: 1.15rem; font-style: italic; }
+.author { display: block; color: var(--muted); font-size: .95rem; margin-top: .15rem; }
+.meta { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .78rem; color: var(--muted); }
+.badge {
+  display: inline-block; margin-left: .5rem; padding: .1rem .5rem;
+  background: var(--badge-bg); color: var(--badge-fg);
+  border-radius: 3px; font-size: .7rem; letter-spacing: .06em;
+  text-transform: uppercase; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  vertical-align: .1em;
+}
+footer { margin-top: 4rem; color: var(--muted); font-size: .85rem; }
+footer a { color: inherit; }
+"""
+
+
+def load(db_path):
+    """Books keyed by id, plus year -> [book_id] (a re-read counts in both years)."""
+    con = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
+    con.row_factory = sqlite3.Row
+    try:
+        books = {r["id"]: dict(r) for r in con.execute(
+            'SELECT id, title, author, edition, worked FROM Book')}
+        by_year = defaultdict(list)
+        for r in con.execute('SELECT book_id, year FROM Reading ORDER BY book_id'):
+            if r["book_id"] in books:
+                by_year[r["year"]].append(r["book_id"])
+    finally:
+        con.close()
+    return books, by_year
+
+
+def render(books, by_year):
+    e = html.escape
+    readings = sum(len(v) for v in by_year.values())
+    years = sorted(by_year, reverse=True)
+
+    span = ""
+    if years:
+        span = str(years[-1]) if years[-1] == years[0] else f"{years[-1]}–{years[0]}"
+    tally = f"{readings} reading{'s' * (readings != 1)} · {len(books)} book{'s' * (len(books) != 1)}"
+    if span:
+        tally += f" · {span}"
+
+    out = [
+        "<!doctype html>",
+        '<html lang="en"><head><meta charset="utf-8">',
+        '<meta name="viewport" content="width=device-width, initial-scale=1">',
+        "<title>Reading Catalog</title>",
+        f"<style>{CSS}</style>",
+        "</head><body><main>",
+        f"<header><h1>Reading Catalog</h1><p class=\"tally\">{e(tally)}</p></header>",
+    ]
+
+    for year in years:
+        ids = by_year[year]
+        out.append(f'<h2>{year}<span class="count">{len(ids)}</span></h2><ol>')
+        for bid in sorted(ids):
+            b = books[bid]
+            bits = [f'<span class="title">{e(b["title"])}</span>']
+            if b["author"]:
+                bits.append(f'<span class="author">{e(b["author"])}</span>')
+            meta = e(bid)
+            if b["edition"]:
+                meta += f' · {e(b["edition"])} edition'
+            line = f'<span class="meta">{meta}</span>'
+            if b["worked"]:
+                line += '<span class="badge">worked</span>'
+            bits.append(line)
+            out.append("<li>" + "".join(bits) + "</li>")
+        out.append("</ol>")
+
+    out.append(
+        '<footer>Generated by <a href="https://github.com/bdcbqa314159/bookward">bookward</a>. '
+        "Each id names the book’s PDF in the archive; the log itself stays local."
+        "</footer></main></body></html>"
+    )
+    return "\n".join(out) + "\n"
+
+
+def selftest():
+    con = sqlite3.connect(":memory:")
+    con.executescript("""
+        CREATE TABLE Book (id TEXT PRIMARY KEY, title TEXT, author TEXT, edition TEXT, worked INTEGER);
+        CREATE TABLE Reading (id TEXT PRIMARY KEY, book_id TEXT, year INTEGER);
+        INSERT INTO Book VALUES ('bk-0001','Dune & Sons','Herbert','2nd',1),
+                                ('bk-0002','<script>','Peña','',0);
+        INSERT INTO Reading VALUES ('a','bk-0001',2022),('b','bk-0001',2024),('c','bk-0002',2024);
+    """)
+    books = {r[0]: dict(zip(("id", "title", "author", "edition", "worked"), r))
+             for r in con.execute("SELECT * FROM Book")}
+    by_year = defaultdict(list)
+    for bid, y in con.execute("SELECT book_id, year FROM Reading"):
+        by_year[y].append(bid)
+    page = render(books, by_year)
+
+    assert "3 readings · 2 books · 2022–2024" in page, "tally: re-read counts twice"
+    assert re.findall(r"<h2>(\d{4})", page) == ["2024", "2022"], "years must run newest first"
+    assert "&lt;script&gt;" in page and "<script>" not in page, "titles must be escaped"
+    assert "Dune &amp; Sons" in page, "ampersands must be escaped"
+    assert page.count('class="badge"') == 2, "worked badge on both readings of bk-0001"
+    assert "Peña" in page, "non-ascii must survive"
+    print("selftest ok")
+
+
+def main():
+    if "--selftest" in sys.argv:
+        return selftest()
+    db = Path(os.environ.get("BOOKWARD_DB") or REPO / "reading.db")
+    if not db.exists():
+        sys.exit(f"build_page: no database at {db}")
+    out = REPO / "docs" / "index.html"
+    out.parent.mkdir(exist_ok=True)
+    (out.parent / ".nojekyll").touch()
+    out.write_text(render(*load(db)), encoding="utf-8")
+    print(f"wrote {out.relative_to(REPO)}")
+
+
+if __name__ == "__main__":
+    main()

@@ -1,18 +1,41 @@
 #!/usr/bin/env bash
-# My reading log. The database lives in THIS repo, reports collect in reports/.
+# My reading log. The database lives in THIS repo and stays local; the
+# generated catalog collects in reports/ and the published site in docs/.
 #
 #   ./bw                    open the TUI
-#   ./bw list               any CLI verb: add / progress / finish / shelve / list / report
+#   ./bw gui                open the desktop GUI
+#   ./bw publish [msg]      regenerate catalog + site, commit, push
+#   ./bw <verb> ...         add / again / edit / find / list / worked / year / remove / report
 set -euo pipefail
 
 repo="$(cd "$(dirname "$0")" && pwd)"
 export BOOKWARD_DB="$repo/reading.db"
-cd "$repo/reports"   # report output (tex/pdf + latexmk aux) lands here, not in the repo root
 
 if [ $# -eq 0 ]; then
   exec "$repo/bin/bookward-tui"
 fi
-if [ "$1" = "gui" ]; then
-  exec "$repo/bin/bookward-gui"
-fi
+
+case "$1" in
+  gui)
+    exec "$repo/bin/bookward-gui"
+    ;;
+  publish)
+    # The db is gitignored, so an edit is invisible to git until the catalog is
+    # regenerated. This is the one command that closes that gap.
+    (cd "$repo/reports" && "$repo/bin/bookward" report)
+    python3 "$repo/scripts/build_page.py"
+    cd "$repo"
+    git add reports/reading-catalog.md reports/reading-catalog.pdf docs
+    if git diff --cached --quiet; then
+      echo "nothing to publish — the catalog already matches the log"
+      exit 0
+    fi
+    git commit -q -m "${2:-catalog: refresh}"
+    git push -q
+    echo "published: https://bdcbqa314159.github.io/myReadings/"
+    exit 0
+    ;;
+esac
+
+cd "$repo/reports" # report output (tex/pdf + latexmk aux) lands here, not the repo root
 exec "$repo/bin/bookward" "$@"
