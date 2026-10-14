@@ -4,8 +4,7 @@ My reading catalog, powered by
 [bookward](https://github.com/bdcbqa314159/bookward). Published here: the
 rendered **[catalog site](https://bdcbqa314159.github.io/myReadings/)**, its
 **[Markdown twin](reports/reading-catalog.md)**, and a **PDF**. The database
-itself (`reading.db`) stays local, and the binaries ship in with
-`~/work/bookward/scripts/dist.sh ~/work/myReadings/bin`.
+itself (`reading.db`) stays local, and the binaries ship in with `./bw sync`.
 
 Each entry gets a generated id (`bk-0001`, ...) which names the book's PDF on
 the archive drive — the database is the index connecting titles to files.
@@ -13,6 +12,7 @@ the archive drive — the database is the index connecting titles to files.
 ```sh
 ./bw                                  # TUI (Books / Table / Stats)
 ./bw gui                              # desktop GUI
+./bw sync                             # pull + rebuild + re-ship the binaries
 ./bw add "Dune" --author "Frank Herbert" --edition "Penguin" --year 2023
 ./bw add "Stochastic Calculus for Finance II" --author "Shreve" --worked yes
 ./bw find shreve                      # title/author search -> id -> PDF
@@ -28,6 +28,16 @@ the archive drive — the database is the index connecting titles to files.
 
 Convention: books read before the list began (2022) are logged with
 `--year 2021`.
+
+## Binaries
+
+`bin/` is gitignored and holds a plain copy of bookward's release build, so
+nothing keeps it current — a fix landed upstream does not reach this repo until
+it is re-shipped. `./bw sync` fetches `main`, fast-forwards it (or warns and
+ships the working tree as-is if the checkout is dirty), builds release, and
+copies all three executables in. It takes seconds when nothing changed, so run
+it whenever you suspect you are behind. Point `BOOKWARD_SRC` elsewhere if the
+checkout is not at `~/work/bookward`.
 
 ## Publishing
 

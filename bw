@@ -4,7 +4,8 @@
 #
 #   ./bw                    open the TUI
 #   ./bw gui                open the desktop GUI
-#   ./bw publish [msg]      regenerate catalog + site, commit, push
+#   ./bw sync               rebuild + re-ship the bookward binaries into bin/
+#   ./bw publish [msg]      regenerate catalog + site, commit, open a PR
 #   ./bw <verb> ...         add / again / edit / find / list / worked / year / remove / report
 set -euo pipefail
 
@@ -18,6 +19,25 @@ fi
 case "$1" in
   gui)
     exec "$repo/bin/bookward-gui"
+    ;;
+  sync)
+    # bin/ is a plain copy of bookward's release build, so nothing keeps it
+    # current. Cheap and idempotent — the builds no-op when nothing changed,
+    # so run it whenever you suspect you are behind.
+    src="${BOOKWARD_SRC:-$HOME/work/bookward}"
+    [ -d "$src/.git" ] || {
+      echo "bw sync: no bookward checkout at $src (set BOOKWARD_SRC)" >&2
+      exit 1
+    }
+    git -C "$src" fetch -q origin
+    if [ -n "$(git -C "$src" status --porcelain)" ]; then
+      echo "note: $src has local changes — shipping the working tree as-is"
+    else
+      git -C "$src" pull --ff-only -q
+    fi
+    echo "bookward: $(git -C "$src" log -1 --format='%h %s')"
+    "$src/scripts/dist.sh" "$repo/bin"
+    exit 0
     ;;
   publish)
     # The db is gitignored, so an edit is invisible to git until the catalog is
