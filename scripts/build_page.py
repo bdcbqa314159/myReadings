@@ -17,7 +17,7 @@ import os
 import re
 import sqlite3
 import sys
-from collections import defaultdict
+from collections import Counter, defaultdict
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
@@ -59,13 +59,14 @@ li { padding: 1.1rem 0; border-bottom: 1px solid var(--rule); }
 .title { font-size: 1.15rem; font-style: italic; }
 .author { display: block; color: var(--muted); font-size: .95rem; margin-top: .15rem; }
 .meta { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .78rem; color: var(--muted); }
-.badge {
+.badge, .repeat {
   display: inline-block; margin-left: .5rem; padding: .1rem .5rem;
   background: var(--badge-bg); color: var(--badge-fg);
   border-radius: 3px; font-size: .7rem; letter-spacing: .06em;
   text-transform: uppercase; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   vertical-align: .1em;
 }
+.repeat { background: none; color: var(--muted); box-shadow: inset 0 0 0 1px var(--rule); }
 footer { margin-top: 4rem; color: var(--muted); font-size: .85rem; }
 footer a { color: inherit; }
 """
@@ -110,9 +111,14 @@ def render(books, by_year):
     ]
 
     for year in years:
-        ids = by_year[year]
-        out.append(f'<h2>{year}<span class="count">{len(ids)}</span></h2><ol>')
-        for bid in sorted(ids):
+        # One entry per book per year, as the Markdown catalog does: a book read
+        # twice in a year is one line carrying the count, not a visual duplicate.
+        times = Counter(by_year[year])
+        # The badge counts READINGS, so a year reads 33 even when some of those
+        # are repeats — that is the number being tracked. Repeats still collapse
+        # to one row carrying "read N times", so rows can be fewer than the badge.
+        out.append(f'<h2>{year}<span class="count">{sum(times.values())}</span></h2><ol>')
+        for bid in sorted(times):
             b = books[bid]
             bits = [f'<span class="title">{e(b["title"])}</span>']
             if b["author"]:
@@ -121,6 +127,10 @@ def render(books, by_year):
             if b["edition"]:
                 meta += f' · {e(b["edition"])} edition'
             line = f'<span class="meta">{meta}</span>'
+            n = times[bid]
+            if n > 1:
+                label = "read twice" if n == 2 else f"read {n} times"
+                line += f'<span class="repeat">{label}</span>'
             if b["worked"]:
                 line += '<span class="badge">worked</span>'
             bits.append(line)
@@ -142,7 +152,8 @@ def selftest():
         CREATE TABLE Reading (id TEXT PRIMARY KEY, book_id TEXT, year INTEGER);
         INSERT INTO Book VALUES ('bk-0001','Dune & Sons','Herbert','2nd',1),
                                 ('bk-0002','<script>','Peña','',0);
-        INSERT INTO Reading VALUES ('a','bk-0001',2022),('b','bk-0001',2024),('c','bk-0002',2024);
+        INSERT INTO Reading VALUES ('a','bk-0001',2022),('b','bk-0001',2024),('c','bk-0002',2024),
+                                   ('d','bk-0002',2024);
     """)
     books = {r[0]: dict(zip(("id", "title", "author", "edition", "worked"), r))
              for r in con.execute("SELECT * FROM Book")}
@@ -151,12 +162,16 @@ def selftest():
         by_year[y].append(bid)
     page = render(books, by_year)
 
-    assert "3 readings · 2 books · 2022–2024" in page, "tally: re-read counts twice"
+    assert "4 readings · 2 books · 2022–2024" in page, "tally: every reading counts"
     assert re.findall(r"<h2>(\d{4})", page) == ["2024", "2022"], "years must run newest first"
     assert "&lt;script&gt;" in page and "<script>" not in page, "titles must be escaped"
     assert "Dune &amp; Sons" in page, "ampersands must be escaped"
     assert page.count('class="badge"') == 2, "worked badge on both readings of bk-0001"
     assert "Peña" in page, "non-ascii must survive"
+    # bk-0002 was read twice in 2024: one entry carrying the count, not two.
+    assert page.count("bk-0002") == 1, "a same-year repeat must not duplicate the entry"
+    assert page.count("read twice") == 1, "the repeat must be labelled"
+    assert '<h2>2024<span class="count">3<' in page, "the badge counts readings, repeats included"
     print("selftest ok")
 
 

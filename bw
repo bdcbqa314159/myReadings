@@ -53,6 +53,13 @@ case "$1" in
       echo "nothing to publish — the catalog already matches the log"
       exit 0
     fi
+    # Publishing a page the committed generator cannot reproduce is worse than
+    # refusing: say so and let the generator change ride in the same commit.
+    if ! git diff --quiet -- scripts/ || ! git diff --cached --quiet -- scripts/; then
+      echo "scripts/ has uncommitted changes — commit them first, or they will not" >&2
+      echo "match the docs/ this publishes. Add them with:  git add scripts" >&2
+      exit 1
+    fi
     msg="${2:-catalog: refresh}"
     branch="catalog/$(date +%Y%m%d-%H%M%S)"
     git switch -q -c "$branch"
