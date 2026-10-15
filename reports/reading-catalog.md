@@ -2,7 +2,7 @@
 
 130 readings, 120 distinct books.
 
-## 2025 — 33 books
+## 2025 — 31 books
 
 - E. Kopp, J. Malczak and T. Zastawniak. *Probability for Finance*. (bk-0022)
 - M. Capiński, E. Kopp and J. Traple. *Stochastic Calculus for Finance*. (bk-0024)
@@ -12,8 +12,6 @@
 - *Calcul Stochastique et Modèles de Diffusions*. (bk-0059)
 - Dorothy R. Kirk. *Deciphering Object-Oriented Programming with C++*. (bk-0074)
 - A. Savine. *Modern Computational Finance: AAD and Parallel Simulations*. (bk-0086)
-- L.B.G. Andersen and V.V. Piterbarg. *Interest Rate Modelling. Volume 1: Foundations and Vanilla Models*. (bk-0096)
-- Mary Wollstonecraft. *Défense des droits des femmes*. (bk-0097)
 - L.B.G. Andersen and V.V. Piterbarg. *Interest Rate Modelling. Volume 2: Term Structure Models*. (bk-0098)
 - Vincent Guedj. *Introduction à la géométrie différentielle*. (bk-0099)
 - M. Capiński and E. Kopp. *Discrete Models of Financial Markets*. (bk-0100)
@@ -38,9 +36,8 @@
 - Onorato Vaticone. *C++ System Programming Cookbook*. (bk-0119)
 - Joe Pitt-Francis and Jonathan Whiteley. *Guide to Scientific Computing in C++*. (bk-0120)
 
-## 2024 — 32 books
+## 2024 — 33 books
 
-- Alexander Melnikov. *A Course of Stochastic Analysis*. (bk-0064)
 - A. Kulikov and P. Pevzner. *Learn Algorithms through Programming and Puzzle solving*. (bk-0065)
 - M. J. Kochenderfer and T. A. Wheeler. *Algorithms for Optimization*. (bk-0066)
 - H. Brezis. *Functional Analysis, Sobolev Spaces and Partial Differential Equations*. (bk-0067)
@@ -72,10 +69,11 @@
 - A. Lipton & A. Rennie. *The Oxford Handbook of Credit Derivatives*. (bk-0093)
 - S. Scandizzo. *The Validation of Risk Models*. (bk-0094)
 - L. Krippner. *Zero Lower Bound Term Structure Modeling*. (bk-0095)
+- L.B.G. Andersen and V.V. Piterbarg. *Interest Rate Modelling. Volume 1: Foundations and Vanilla Models*. (bk-0096)
+- Mary Wollstonecraft. *Défense des droits des femmes*. (bk-0097)
 
 ## 2023 — 33 books
 
-- Alonso Peña Ph. D.. *Advanced Quantitative Finance with C++*. (bk-0003)
 - I. Karatzas & S. E. Shreve. *Brownian Motion and Stochastic Calculus*. (bk-0032)
 - H. Geman. *Commodities and Commodity Derivatives*. (bk-0033)
 - I. J. Clark. *Commodity Option Pricing*. (bk-0034)
@@ -108,12 +106,13 @@
 - *Leçons sur les Equations aux Dérivées Partielles*. (bk-0061)
 - Bernt Øksendal. *Stochastic Differential Equations*. (bk-0062)
 - Wisnu Anggoro and John Torjo. *Boost.Asio C++ Network Programming*. 2nd. (bk-0063)
+- Alexander Melnikov. *A Course of Stochastic Analysis*. (bk-0064)
 
 ## 2022 — 31 books
 
 - Richard Grimes. *Beginning C++ Programming*. (bk-0001)
 - John Horton. *Beginning C++ Game Programming*. 3rd. (bk-0002)
-- Alonso Peña Ph. D.. *Advanced Quantitative Finance with C++*. (bk-0003) — read twice
+- Alonso Peña Ph. D.. *Advanced Quantitative Finance with C++*. (bk-0003) — read 3 times
 - Hugo D. Junghenn. *An Introduction to Financial Mathematics*. 2nd. (bk-0004)
 - Luis Barreira. *Analyse Complexe et Equations Différentielles*. (bk-0005)
 - Pierre Henry-Labordère. *Analysis, Geometry, and Modeling in Finance*. (bk-0006)
