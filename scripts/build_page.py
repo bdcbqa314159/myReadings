@@ -114,9 +114,10 @@ def render(books, by_year):
         # One entry per book per year, as the Markdown catalog does: a book read
         # twice in a year is one line carrying the count, not a visual duplicate.
         times = Counter(by_year[year])
-        # The badge counts the entries listed (distinct books), matching the
-        # Markdown catalog's "## 2022 — 31 books". Repeats show on their own row.
-        out.append(f'<h2>{year}<span class="count">{len(times)}</span></h2><ol>')
+        # The badge counts READINGS, so a year reads 33 even when some of those
+        # are repeats — that is the number being tracked. Repeats still collapse
+        # to one row carrying "read N times", so rows can be fewer than the badge.
+        out.append(f'<h2>{year}<span class="count">{sum(times.values())}</span></h2><ol>')
         for bid in sorted(times):
             b = books[bid]
             bits = [f'<span class="title">{e(b["title"])}</span>']
@@ -170,7 +171,7 @@ def selftest():
     # bk-0002 was read twice in 2024: one entry carrying the count, not two.
     assert page.count("bk-0002") == 1, "a same-year repeat must not duplicate the entry"
     assert page.count("read twice") == 1, "the repeat must be labelled"
-    assert '<h2>2024<span class="count">2<' in page, "the badge counts entries listed, not readings"
+    assert '<h2>2024<span class="count">3<' in page, "the badge counts readings, repeats included"
     print("selftest ok")
 
 

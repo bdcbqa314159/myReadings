@@ -2,7 +2,7 @@
 
 130 readings, 120 distinct books.
 
-## 2025 — 31 books
+## 2025 — 31 readings
 
 - E. Kopp, J. Malczak and T. Zastawniak. *Probability for Finance*. (bk-0022)
 - M. Capiński, E. Kopp and J. Traple. *Stochastic Calculus for Finance*. (bk-0024)
@@ -36,7 +36,7 @@
 - Onorato Vaticone. *C++ System Programming Cookbook*. (bk-0119)
 - Joe Pitt-Francis and Jonathan Whiteley. *Guide to Scientific Computing in C++*. (bk-0120)
 
-## 2024 — 33 books
+## 2024 — 33 readings
 
 - A. Kulikov and P. Pevzner. *Learn Algorithms through Programming and Puzzle solving*. (bk-0065)
 - M. J. Kochenderfer and T. A. Wheeler. *Algorithms for Optimization*. (bk-0066)
@@ -72,7 +72,7 @@
 - L.B.G. Andersen and V.V. Piterbarg. *Interest Rate Modelling. Volume 1: Foundations and Vanilla Models*. (bk-0096)
 - Mary Wollstonecraft. *Défense des droits des femmes*. (bk-0097)
 
-## 2023 — 33 books
+## 2023 — 33 readings
 
 - I. Karatzas & S. E. Shreve. *Brownian Motion and Stochastic Calculus*. (bk-0032)
 - H. Geman. *Commodities and Commodity Derivatives*. (bk-0033)
@@ -108,7 +108,7 @@
 - Wisnu Anggoro and John Torjo. *Boost.Asio C++ Network Programming*. 2nd. (bk-0063)
 - Alexander Melnikov. *A Course of Stochastic Analysis*. (bk-0064)
 
-## 2022 — 31 books
+## 2022 — 33 readings
 
 - Richard Grimes. *Beginning C++ Programming*. (bk-0001)
 - John Horton. *Beginning C++ Game Programming*. 3rd. (bk-0002)
