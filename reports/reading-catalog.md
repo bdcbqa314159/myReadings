@@ -1,8 +1,19 @@
 # Reading Catalog
 
-130 readings, 120 distinct books.
+140 readings, 127 distinct books.
 
-## 2025 — 31 readings
+## 2026 — 8 readings
+
+- Jim Gatheral. *The Volatility Surface*. (bk-0029)
+- M. Capiński and T. Zastawniak. *Credit Risk*. (bk-0102)
+- J. A. D. Appleby, D. C. Edelman and J. J. H. Miller. *Numerical Methods for Finance*. (bk-0113)
+- Yue Kuen Kwok and Wendong Zheng. *Pricing Models of Volatility Products and Exotic Variance Derivatives*. (bk-0123)
+- Ambrose Lo. *Derivative Pricing: A Problem-Based Primer*. (bk-0124)
+- Josh Lospinoso. *C++ Crash Course: A Fast-Paced Introduction*. (bk-0125)
+- Filippo Santambrogio. *Optimal Transport for Applied Mathematicians*. (bk-0126)
+- Rüdiger U. Seydel. *Tools for Computational Finance*. 5th. (bk-0127)
+
+## 2025 — 33 readings
 
 - E. Kopp, J. Malczak and T. Zastawniak. *Probability for Finance*. (bk-0022)
 - M. Capiński, E. Kopp and J. Traple. *Stochastic Calculus for Finance*. (bk-0024)
@@ -35,6 +46,8 @@
 - Rian Quinn. *Hands-On System Programming with C++*. (bk-0118)
 - Onorato Vaticone. *C++ System Programming Cookbook*. (bk-0119)
 - Joe Pitt-Francis and Jonathan Whiteley. *Guide to Scientific Computing in C++*. (bk-0120)
+- Christian Bluhm and Ludger Overbeck. *Structured Credit Portfolio Analysis, Baskets and CDOs*. (bk-0121)
+- Hui-Hsiung Kuo. *Introduction to Stochastic Integration*. (bk-0122)
 
 ## 2024 — 33 readings
 
