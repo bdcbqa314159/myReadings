@@ -1,8 +1,8 @@
 # Reading Catalog
 
-148 readings, 135 distinct books.
+149 readings, 136 distinct books.
 
-## 2026 — 16 readings
+## 2026 — 17 readings
 
 - Jim Gatheral. *The Volatility Surface*. (bk-0029)
 - M. Capiński and T. Zastawniak. *Credit Risk*. (bk-0102)
@@ -20,6 +20,7 @@
 - Aurélien Barrau. *Trahir par fidélité: contre la fin du monde avec Alexandre Grothendieck*. (bk-0133)
 - Sun Tzu. *The Art of War*. (bk-0134)
 - Wim Schoutens. *Lévy Processes in Finance: Pricing Financial Derivatives*. (bk-0135)
+- Carlo Rovelli. *There Are Places in the World Where Rules Are Less Important Than Kindness*. (bk-0136)
 
 ## 2025 — 33 readings
 
