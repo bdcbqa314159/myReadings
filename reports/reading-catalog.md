@@ -1,8 +1,8 @@
 # Reading Catalog
 
-140 readings, 127 distinct books.
+148 readings, 135 distinct books.
 
-## 2026 — 8 readings
+## 2026 — 16 readings
 
 - Jim Gatheral. *The Volatility Surface*. (bk-0029)
 - M. Capiński and T. Zastawniak. *Credit Risk*. (bk-0102)
@@ -12,6 +12,14 @@
 - Josh Lospinoso. *C++ Crash Course: A Fast-Paced Introduction*. (bk-0125)
 - Filippo Santambrogio. *Optimal Transport for Applied Mathematicians*. (bk-0126)
 - Rüdiger U. Seydel. *Tools for Computational Finance*. 5th. (bk-0127)
+- Gregory Zuckerman. *The Man Who Solved the Market: How Jim Simons Launched the Quant Revolution*. (bk-0128)
+- Charles Duhigg. *The Power of Habit: Why We Do What We Do, and How to Change*. (bk-0129)
+- Napoleon Hill. *Think and Grow Rich*. (bk-0130)
+- Tore Skeie. *The Wolf Age: The Vikings, the Anglo-Saxons and the Battle for the North Sea Empire*. (bk-0131)
+- Salomé Saqué. *Résister*. (bk-0132)
+- Aurélien Barrau. *Trahir par fidélité: contre la fin du monde avec Alexandre Grothendieck*. (bk-0133)
+- Sun Tzu. *The Art of War*. (bk-0134)
+- Wim Schoutens. *Lévy Processes in Finance: Pricing Financial Derivatives*. (bk-0135)
 
 ## 2025 — 33 readings
 
