@@ -1,8 +1,29 @@
 # Reading Catalog
 
-130 readings, 120 distinct books.
+150 readings, 137 distinct books.
 
-## 2025 — 31 readings
+## 2026 — 18 readings
+
+- Jim Gatheral. *The Volatility Surface*. (bk-0029)
+- M. Capiński and T. Zastawniak. *Credit Risk*. (bk-0102)
+- J. A. D. Appleby, D. C. Edelman and J. J. H. Miller. *Numerical Methods for Finance*. (bk-0113)
+- Yue Kuen Kwok and Wendong Zheng. *Pricing Models of Volatility Products and Exotic Variance Derivatives*. (bk-0123)
+- Ambrose Lo. *Derivative Pricing: A Problem-Based Primer*. (bk-0124)
+- Josh Lospinoso. *C++ Crash Course: A Fast-Paced Introduction*. (bk-0125)
+- Filippo Santambrogio. *Optimal Transport for Applied Mathematicians*. (bk-0126)
+- Rüdiger U. Seydel. *Tools for Computational Finance*. 5th. (bk-0127)
+- Gregory Zuckerman. *The Man Who Solved the Market: How Jim Simons Launched the Quant Revolution*. (bk-0128)
+- Charles Duhigg. *The Power of Habit: Why We Do What We Do, and How to Change*. (bk-0129)
+- Napoleon Hill. *Think and Grow Rich*. (bk-0130)
+- Tore Skeie. *The Wolf Age: The Vikings, the Anglo-Saxons and the Battle for the North Sea Empire*. (bk-0131)
+- Salomé Saqué. *Résister*. (bk-0132)
+- Aurélien Barrau. *Trahir par fidélité: contre la fin du monde avec Alexandre Grothendieck*. (bk-0133)
+- Sun Tzu. *The Art of War*. (bk-0134)
+- Wim Schoutens. *Lévy Processes in Finance: Pricing Financial Derivatives*. (bk-0135)
+- Carlo Rovelli. *There Are Places in the World Where Rules Are Less Important Than Kindness*. (bk-0136)
+- Patrick Radden Keefe. *London Falling: A Mysterious Death in a Gilded City and a Family's Search for Truth*. (bk-0137)
+
+## 2025 — 33 readings
 
 - E. Kopp, J. Malczak and T. Zastawniak. *Probability for Finance*. (bk-0022)
 - M. Capiński, E. Kopp and J. Traple. *Stochastic Calculus for Finance*. (bk-0024)
@@ -35,6 +56,8 @@
 - Rian Quinn. *Hands-On System Programming with C++*. (bk-0118)
 - Onorato Vaticone. *C++ System Programming Cookbook*. (bk-0119)
 - Joe Pitt-Francis and Jonathan Whiteley. *Guide to Scientific Computing in C++*. (bk-0120)
+- Christian Bluhm and Ludger Overbeck. *Structured Credit Portfolio Analysis, Baskets and CDOs*. (bk-0121)
+- Hui-Hsiung Kuo. *Introduction to Stochastic Integration*. (bk-0122)
 
 ## 2024 — 33 readings
 
