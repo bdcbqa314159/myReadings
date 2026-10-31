@@ -1,8 +1,8 @@
 # Reading Catalog
 
-152 readings, 139 distinct books.
+153 readings, 140 distinct books.
 
-## 2026 — 20 readings
+## 2026 — 21 readings
 
 - Jim Gatheral. *The Volatility Surface*. (bk-0029)
 - M. Capiński and T. Zastawniak. *Credit Risk*. (bk-0102)
@@ -24,6 +24,7 @@
 - Patrick Radden Keefe. *London Falling: A Mysterious Death in a Gilded City and a Family's Search for Truth*. (bk-0137)
 - Domingo Tavella and Curt Randall. *Pricing Financial Instruments: The Finite Difference Method*. (bk-0138)
 - Manuel Ammann. *Credit Risk Valuation: Methods, Models, and Applications*. (bk-0139)
+- Wojbor A. Woyczyński. *Diffusion Processes, Jump Processes, and Stochastic Differential Equations*. (bk-0140)
 
 ## 2025 — 33 readings
 
